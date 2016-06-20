@@ -1,0 +1,246 @@
+<!--ADD MEMBERS AND DELIVERABLES-->
+<body>
+
+<div>
+    <div ng-controller="AddMemAndDel as ctrl">
+        <div ng-controller="members">
+
+    <md-card>
+        <md-toolbar style="background: #3b5998;">
+            <div class="md-toolbar-tools" layout="row">
+                <h2>Add Members & Deliverables to Initiated Projects</h2>
+                <span flex></span>
+                <md-button class="md-raised" ng-click="addMembersAndDeliverables()" style="float: right; color:#3b5998
+                 ;background-color: #f2f2f2">
+                    <b style="text-transform: none">Submit Added Tasks and Deleverables</b></md-button>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+         <!--   <div ng-controller="AddMemAndDel as ctrl">
+                <div ng-controller="members"> -->
+                    <section layout="column" flex>
+                    </section>
+                    <div>
+                        <div layout="row">
+                            <md-autocomplete style="width: 95%; height: 40px"
+                                             ng-disabled="ctrl.isDisabled"
+                                             md-no-cache="ctrl.noCache"
+                                             md-selected-item="ctrl.selectedItem"
+                                             md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                             md-search-text="ctrl.searchText"
+                                             md-selected-item-change="ctrl.selectedItemChange(item)"
+                                             md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                             md-item-text="item.display"
+                                             md-min-length="0"
+                                             md-input-id="projectName"
+                                             placeholder="Select assigned project">
+                                <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText"
+                                          md-highlight-flags="^i">{{item.display}}</span>
+                                </md-item-template>
+                            </md-autocomplete>
+
+                            <md-button ng-click="selectProject()" class="md-icon-button md-accent" aria-label="Favorite"
+                                       ng-disabled="checkProject()">
+                                <md-icon md-svg-icon="view/client/img/forward.svg"></md-icon>
+                            </md-button>
+                        </div>
+
+                        <br>
+
+                        <md-card>
+                            <md-toolbar style="background: #f2f2f2; height: 40px">
+                                <div class="md-toolbar-tools" layout="row">
+                                    <h3 style="color:#0f0f0f">Project Details</h3>
+                                    <span flex="10"></span>
+                                    <h3 style="color:#3b5998">Name : {{pjt.pname}}</h3>
+                                    <span flex></span>
+                                    <h5 style="color:#3b5998">Deadline : {{pjt.end_date}}</h5>
+                                    <span flex></span>
+                                    <h5 style="color:#3b5998">Client : {{client}}</h5>
+                                </div>
+                            </md-toolbar>
+                            <md-card-content>
+                                <div layout="row">
+                                    <md-card flex="50">
+
+                                        <md-card-content>
+                                            <h4>Description</h4>
+                                            <center>
+                                                {{pjt.description}}
+                                            </center>
+                                        </md-card-content>
+                                    </md-card>
+                                    <md-card flex="50">
+                                        <md-card-content>
+                                            <h4>Business Functions</h4>
+                                            <center>
+                                                {{pjt.business_functions}}
+                                            </center>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+
+                            </md-card-content>
+                        </md-card>
+                    </div>
+
+
+                    <md-card>
+
+                        <md-toolbar style="background: #f2f2f2;height: 40px">
+                            <div class="md-toolbar-tools" layout="row">
+                                <h3 style="color:#0f0f0f">Add Members</h3>
+                            </div>
+                        </md-toolbar>
+
+                        <md-card-content>
+
+                            <h4>Select Task Assignee</h4>
+
+                            <div layout="row">
+
+                                <input flex="35" type="text" ng-model="assignTask"
+                                       placeholder="Select a task assign category"
+                                       uib-typeahead="state for state in assignTasks | filter:$viewValue | limitTo:8"
+                                       typeahead-editable="false" class="form-control">
+                                <button class="btn btn-primary" type="button" ng-click="getTaskAssignee()"
+                                        ng-disabled="ValGetTA()" style="float: right;">
+                                    Get members
+                                </button>
+
+                                <span flex="5"></span>
+
+                                <input flex="35" type="text" ng-model="TaskMember"
+                                       placeholder="Select a Task Assignee"
+                                       typeahead-editable="false"
+                                       uib-typeahead="state for state in taskMem | filter:$viewValue | limitTo:8"
+                                       class="form-control">
+                                <button class="btn btn-primary" type="button" ng-click="addTaskAssignee()"
+                                        ng-disabled="ValTaskAssignee()" style="float: right;">
+                                    Add Assignee
+                                </button>
+
+                            </div>
+
+                            <table class="c" style="width: 98%">
+                                <thead>
+                                <th>
+                                    <center>Selected Task Assignee</center>
+                                </th>
+                                <th>
+                                    <center>Category</center>
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tbody>
+                                <tr>
+                                    <td> {{assignor.name}}</td>
+                                    <td>{{assignor.cat}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <br>
+
+                            <h4>Select Members for Projects</h4>
+
+                            <div layout="row">
+
+                                <input flex="33" type="text" ng-model="category" placeholder="Select a category"
+                                       uib-typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                       typeahead-editable="false"
+                                       class="form-control">
+                                <button class="btn btn-primary" type="button" ng-click="getMembers()"
+                                        ng-disabled="ValGetMem()"
+                                        style="float: right;">
+                                    Select Category
+                                </button>
+
+                                <span flex="5"></span>
+
+                                <input flex="35" type="text" ng-model="member" placeholder="Select a member"
+                                       uib-typeahead="state for state in members | filter:$viewValue | limitTo:8"
+                                       typeahead-editable="false" class="form-control">
+                                <button class="btn btn-primary" type="button" ng-click="addMembers()"
+                                        ng-disabled="ValAddMem()" style="float: right;">
+                                    Add Member
+                                </button>
+
+                            </div>
+
+                            <table class="c" style="width: 98%">
+                                <thead>
+                                <th>
+                                    <center>Selected Member</center>
+                                </th>
+                                <th>
+                                    <center>Category</center>
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tbody ng-model="data">
+                                <tr ng-repeat="d in data">
+                                    <td> {{d.name}}</td>
+                                    <td>{{d.cat}}</td>
+                                </tbody>
+                            </table>
+
+                        </md-card-content>
+                    </md-card>
+
+
+                    <md-card>
+
+                        <md-toolbar style="background: #f2f2f2;height: 40px">
+                            <div class="md-toolbar-tools" layout="row">
+                                <h3 style="color:#0f0f0f">Add Deliverables</h3>
+                            </div>
+                        </md-toolbar>
+
+                        <md-card-content>
+
+                            <div layout="row">
+
+                                <input flex="63" type="text" class="form-control" placeholder="Deliverable"
+                                       ng-model="delName">
+
+                                <span flex="3"></span>
+                                <md-datepicker ng-model="deadline"
+                                               md-min-date="mindate" md-max-date="maxdate"
+                                               md-placeholder="Deadline">
+                                </md-datepicker>
+                                <span flex="5"></span>
+                                <button class="btn btn-primary" type="button" ng-click="saveDeliverables()"
+                                        ng-disabled="ValAddDel()" style="float: right; height: 32px">
+                                    Save
+                                </button>
+                            </div>
+
+                            <!--     <md-button class="md-primary" ng-click="addNewChoice()">Add Deliverable</md-button> -->
+                            <br>
+                            <table class="c" style="width: 98%">
+                                <thead>
+                                <th>Added Deliverable</th>
+                                <th> Deadline</th>
+                                </thead>
+                                <tbody>
+                                <tbody ng-model="deliverables">
+                                <tr ng-repeat="d in deliverables">
+                                    <td> {{d.name}}</td>
+                                    <td>{{d.deadline}}</td>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+
+                    </md-card>
+
+
+                    </section>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>
+
+
+</body>

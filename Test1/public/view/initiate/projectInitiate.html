@@ -1,0 +1,122 @@
+<body ng-app="InitiatorApp" >
+
+<div style="width: 100%" ng-controller="projectInitiateCtrl" flex="100">
+
+        <md-card style="width: 100%" flex="100">
+            <form name="initiateForm">
+            <md-toolbar style="background: #3b5998;"  >
+                <div class="md-toolbar-tools" layout="row">
+                    <h2>Initiate New Project</h2>
+
+                    <span flex></span>
+                    <md-button ng-click="addInititateProject()" class="md-raised md-primary btn1"
+                               style=" float: right;background-color: #ffffff; color:#000000"
+                               ng-disabled="!initiateForm.$valid">
+                        Submit
+                    </md-button>
+                    <md-button class="md-raised md-primary btn1" ng-click="clearFields()"
+                               style="float: right;background-color: #ffffff; color:#000000">
+                        cancel
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <br>
+            <md-card-content>
+
+
+                <md-input-container style="width: 100%">
+                    <label>Project name</label>
+                    <input ng-model="projectName" required name="projectName">
+                    <div ng-messages="initiateForm.projectName.$error">
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Description</label>
+                    <textarea ng-model="description" columns="1" md-maxlength="500" rows="5" required name="description">
+                    </textarea>
+                    <div ng-messages="initiateForm.description.$error">
+                    </div>
+                </md-input-container>
+
+
+                <md-input-container class="md-block">
+                    <label>Business Functions</label>
+                    <textarea ng-model="businessFunctions" columns="1" md-maxlength="750" rows="5" required name="businessFunctions">
+                    </textarea>
+                    <div ng-messages="initiateForm.businessFunctions.$error">
+                    </div>
+                </md-input-container>
+
+                <label style="color: #C0C0C0">Deadline</label>
+                <md-datepicker ng-model="deadline" md-placeholder="Enter Date..." required name="deadline" md-min-date="minDate">
+                </md-datepicker>
+                <div ng-messages="initiateForm.deadline.$error">
+                </div>
+
+                <br>
+                <br>
+
+                <div layout="row">
+                    <div ng-controller="initiateCtrl as ctrl" style="width: 50%">
+                        <md-autocomplete required
+                                         md-input-name="autocomplete"
+                                         style="width: 95%; height: 40px"
+                                         ng-disabled="ctrl.isDisabled"
+                                         md-no-cache="ctrl.noCache"
+                                         md-selected-item="ctrl.selectedItem"
+                                         md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                         md-search-text="ctrl.searchText"
+                                         md-selected-item-change="ctrl.selectedItemChange(item)"
+                                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                         md-item-text="item.display"
+                                         md-min-length="0"
+                                         placeholder="Client of the project..."
+                                         md-input-id="clientname">
+                            <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText"
+                                          md-highlight-flags="^i">{{item.display}}</span>
+                            </md-item-template>
+                            <div ng-messages="addMembersForm.autocomplete.$error">
+                                <div ng-message="required">Category is required.</div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+                    <div>
+                        <span style="width: 5%"></span>
+                    </div>
+                    <div ng-controller="addMembersCtrl as ctrl" style="width: 50%">
+                        <md-autocomplete required
+                                         md-input-name="autocomplete"
+                                         style="width: 95%; height: 40px"
+                                         ng-disabled="ctrl.isDisabled"
+                                         md-no-cache="ctrl.noCache"
+                                         md-selected-item="ctrl.selectedItem"
+                                         md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                         md-search-text="ctrl.searchText"
+                                         md-selected-item-change="ctrl.selectedItemChange(item)"
+                                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                         md-item-text="item.display"
+                                         md-min-length="0"
+                                         placeholder="Who add members to the project..."
+                                         md-input-id="memAddName">
+                            <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText"
+                                          md-highlight-flags="^i">{{item.display}}</span>
+                            </md-item-template>
+                            <div ng-messages="addMembersForm.autocomplete.$error">
+                                <div ng-message="required">Category is required.</div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+                </div>
+
+            </md-card-content>
+</form>
+        </md-card>
+
+</div>
+
+</body>
+

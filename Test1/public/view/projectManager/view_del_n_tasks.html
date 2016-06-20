@@ -1,0 +1,249 @@
+`<!--VIEW ONGOING PROJECT DETAILS-->
+
+<div>
+
+
+    <md-card ng-controller="ViewTimeSheetandTasks as ctrl">
+        <md-toolbar style="background: #3b5998;">
+            <div class="md-toolbar-tools" layout="row">
+                <h2>Approve Tasks of Ongoing Projects</h2>
+            </div>
+        </md-toolbar>
+
+        <md-card-content>
+
+
+            <div layout="row">
+
+                <md-autocomplete style="width: 95%; height: 40px"
+                                 ng-disabled="ctrl.isDisabled"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="ctrl.selectedItem"
+                                 md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                 md-search-text="ctrl.searchText"
+                                 md-selected-item-change="ctrl.selectedItemChange(item)"
+                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                 md-item-text="item.display"
+                                 md-min-length="0"
+                                 md-input-id="projectName"
+                                 placeholder="Select ongoing project">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-button ng-click="ongoingProjects()" class="md-icon-button md-accent" aria-label="Favorite"
+                           ng-disabled="">
+                    <md-icon md-svg-icon="view/client/img/forward.svg"></md-icon>
+                </md-button>
+            </div>
+            <br>
+            <md-card>
+                <md-toolbar style="background: #f2f2f2; height: 40px">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Project Details</h3>
+                        <span flex="10"></span>
+                        <h4 style="color:#3b5998">Name : {{p.pname}}</h4>
+                        <span flex></span>
+                        <h6 style="color:#3b5998">Deadline : {{p.end_date}}</h6>
+                        <span flex></span>
+                        <h6 style="color:#3b5998">Client : {{p.client}}</h6>
+                    </div>
+                </md-toolbar>
+                <md-card-content>
+                    <div layout="row">
+                        <md-card flex="40">
+                            <md-card-content>
+                                <h4>Description</h4>
+                                <center>
+                                    {{p.description}}
+                                </center>
+                            </md-card-content>
+                        </md-card>
+                        <md-card flex="60">
+                            <md-card-content>
+                                <h4>Deliverables</h4>
+                                <center>
+                                    <table class="c" style="width: 90%">
+                                        <thead>
+                                        <tr>
+                                            <th> Deliverable</th>
+                                            <th> Deadline</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody ng-model="dels">
+                                        <tr ng-repeat="d in dels">
+                                            <td>{{d.del_name}}</td>
+                                            <td> {{d.deadline}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </center>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+
+
+                    <md-card flex>
+                        <md-toolbar class="md-scroll-shrink" style="background: #ffffff;">
+                            <div class="md-toolbar-tools" layout="row">
+                                <h4 style="color:#0f0f0f">Tasks</h4>
+                            </div>
+                        </md-toolbar>
+                        <md-card-content>
+                            <table st-table="tasks" class="c" style="width: 95%">
+                                <thead>
+                                <th> Name</th>
+                                <th>Hours</th>
+                                <th> Deadline</th>
+                                <th> Status</th>
+                                <th>Sub task</th>
+                                </thead>
+                                <tbody ng-model="tasks">
+                                <tr ng-repeat="row in tasks" id="t">
+                                    <td> {{row.name}}</td>
+                                    <td>{{row.time}}</td>
+                                    <td>{{row.deadline}}</td>
+                                    <td>{{row.status}}</td>
+
+                                    <td>
+                                        <md-button class="md-fab md-mini" aria-label="subtask"
+                                                   ng-click="showSub(row)" style="background-color: #002EBE;">
+                                            <md-icon md-svg-src="images/forwardWhite.svg"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </md-card-content>
+                            <md-toolbar style="background: #ffffff;height: 40px">
+                                <div class="md-toolbar-tools" layout="row">
+                                    <h4 style="color:#0f0f0f"> Extended Tasks</h4>
+                                </div>
+                            </md-toolbar>
+                        <md-card-content>
+                            <table st-table="ext" class="c" style="width: 95%">
+                                <thead>
+                                <th> Subtask Name</th>
+                                <th>Hours</th>
+                                <th> Deadline</th>
+                                <th> Status</th>
+                                <th> Developer name</th>
+                                <th>Approve task</th>
+                                <th>Resubmit</th>
+
+                                </thead>
+                                <tbody ng-model="ext">
+                                <tr ng-repeat="row in ext">
+                                    <td> {{row.ExtendedName}}</td>
+                                    <td>{{row.hours}}</td>
+                                    <td>{{row.deadline}}</td>
+                                    <td>{{row.TaskStatus}}</td>
+                                    <td>{{row.DevName}}</td>
+                                    <td>
+                                        <md-button class="md-raised md-primary" style="float: right;"
+                                                   ng-disabled="checkEStatus(row)" ng-click="approveETask(row)">
+                                            Approve task
+                                        </md-button>
+
+                                    </td>
+                                    <td>
+                                        <md-button class="md-raised md-primary" style="float: right;"
+                                                   ng-disabled="cancelEStatus(row)" ng-click="cancelExtend(row)">
+                                            Cancel task
+                                        </md-button>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right"
+                                        style="min-width: 100%">
+
+                                <md-content layout-padding>
+                                    <table class="c" style="width: 95%" st-table="sub">
+                                        <thead>
+                                        <th> Name</th>
+                                        <th> Member</th>
+                                        <th>Hours</th>
+                                        <th> Deadline</th>
+                                        <th> Status</th>
+                                        <th>Task Approved</th>
+
+                                        </thead>
+                                        <tbody ng-model="sub">
+                                        <tr ng-repeat="row in sub">
+                                            <td> {{row.name}}</td>
+                                            <td>{{row.member}}</td>
+                                            <td>{{row.time}}</td>
+                                            <td>{{row.deadline}}</td>
+                                            <td>{{row.status}}</td>
+                                            <td>
+                                                <md-button ng-click="approveTask(row)" class="md-primary"
+                                                           ng-disabled="checkStatus(row)" style="float: right">
+                                                    ApproveTask
+                                                </md-button>
+                                                <md-button ng-click="cancelTask(row)" class="md-primary"
+                                                           ng-disabled="cancelStatus(row)" style="float: right">
+                                                    Cancel
+                                                </md-button>
+
+                                            </td>
+
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <md-button ng-click="close()" class="md-primary" style="float: right">
+                                        Close
+                                    </md-button>
+                                </md-content>
+                            </md-sidenav>
+                        </md-card-content>
+                    </md-card>
+                </md-card-content>
+</div>
+
+<!--     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="min-width: 100%">
+
+         <md-content ng-controller="SideCtrl" layout-padding>
+             <table class="c" style="width: 95%">
+                 <thead>
+                 <th> Name</th>
+                 <th> Member</th>
+                 <th>Hours</th>
+                 <th> Deadline</th>
+                 <th> Status</th>
+                 <th>Task Approved</th>
+
+                 </thead>
+                 <tbody ng-model="tasks">
+                 <tr ng-repeat="s in tasks[$index].subtasks">
+                     <td> {{s.name}}</td>
+                     <td>{{s.member}}</td>
+                     <td>{{s.time}}</td>
+                     <td>{{s.deadline}}</td>
+                     <td>{{s.status}}</td>
+                     <td>
+                         <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="data.cb5"
+                                      class="md-primary">
+                             Approve task
+                         </md-checkbox>
+                     </td>
+
+                 </tr>
+
+                 </tbody>
+             </table>
+             <md-button ng-click="close()" class="md-primary" style="float: right">
+                 Close
+             </md-button>
+         </md-content>
+     </md-sidenav> -->
+</md-content>
+
+</md-card-content>
+
+</md-card>
+
+
+</div>

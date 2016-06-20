@@ -1,0 +1,284 @@
+<!--ADD MEMBERS AND DELIVERABLES-->
+
+<body>
+
+<div ng-controller="EditOngoing as ctrl">
+
+    <md-card>
+        <md-toolbar style="background: #3b5998;">
+            <div class="md-toolbar-tools" layout="row">
+                <h2>Edit Members & Deliverables</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-card-content>
+            <div layout="row">
+                <md-autocomplete style="width: 95%; height: 40px"
+                                 ng-disabled="ctrl.isDisabled"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="ctrl.selectedItem"
+                                 md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                 md-search-text="ctrl.searchText"
+                                 md-selected-item-change="ctrl.selectedItemChange(item)"
+                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                 md-item-text="item.display"
+                                 md-min-length="0"
+                                 md-input-id="projectName"
+                                 placeholder="Select assigned project">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+
+                <md-button ng-click="selectOngoingProject()" class="md-icon-button md-accent" aria-label="Favorite">
+                    <md-icon md-svg-icon="view/client/img/forward.svg"></md-icon>
+                </md-button>
+            </div>
+
+            <br>
+            <md-card>
+
+                <md-toolbar style="background: #f2f2f2; height: 40px">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Edit Members of Ongoing projects</h3>
+                        <span flex="10"></span>
+                    </div>
+                </md-toolbar>
+
+                <md-card-content>
+                    <div ng-controller="membersEdit">
+                        <h4>Change Task Assignor</h4>
+
+                        <div layout="row">
+                            <h5>Added Task Assignor : {{AssignorName}}</h5>
+                            <span flex="10"></span>
+                            <h5>Category : {{AssignCat}}</h5>
+                        </div>
+
+                        <div layout="row">
+
+                            <input flex="35" type="text" ng-model="assignTask"
+                                   placeholder="Select a task assign category"
+                                   uib-typeahead="state for state in assignTasks  | filter:$viewValue | limitTo:8"
+                                   typeahead-editable="false" class="form-control">
+                            <button class="btn btn-primary" type="button" ng-click="getTaskAssignee()"
+                                    style="float: right; height: 34px">
+                                Select Category
+                            </button>
+                            <span flex="10"></span>
+                            <input flex="35" type="text" ng-model="TaskMember" placeholder="Select a task assignor"
+                                   typeahead-editable="false"
+                                   uib-typeahead="state for state in taskMem | filter:$viewValue | limitTo:8"
+                                   typeahead-mim-length="0" class="form-control">
+                            <button class="btn btn-primary" type="button" ng-click="addTaskAssignee()"
+                                    style="float: right; height: 34px">
+                                Change Assignor
+                            </button>
+
+                        </div>
+
+                        <br>
+                        <h4>Add or Delete Members</h4>
+
+                        <div layout="row">
+
+                            <input flex="35" type="text" ng-model="category" placeholder="Select a category"
+                                   uib-typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                   class="form-control">
+                            <button class="btn btn-primary" type="button" ng-click="getMembers()"
+                                    style="float: right; height: 34px">
+                                Select Category
+                            </button>
+                            <span flex="10"></span>
+                            <input flex="35" type="text" ng-model="member" placeholder="Select a member"
+                                   uib-typeahead="state for state in members | filter:$viewValue | limitTo:8"
+                                   class="form-control">
+                            <button class="btn btn-primary" type="button" ng-click="addMembers()"
+                                    style="float: right; height: 34px">
+                                Select Member
+                            </button>
+
+                        </div>
+                        <table class="c" style="width: 98%" st-table="addedMembers">
+                            <thead>
+                            <th> Member</th>
+                            <th> Category</th>
+                            <th> Delete Member</th>
+                            </thead>
+                            <tbody>
+                            <tbody ng-model="addedMembers">
+                            <tr ng-repeat="row in addedMembers">
+                                <td> {{row.name}}</td>
+                                <td>{{row.category}}</td>
+                                <td>
+                                    <button type="button" data-toggle="modal"
+                                            ng-click="deleteMem(row)" data-target="#myModal">Delete
+                                    </button>
+                                </td>
+                            </tbody>
+                        </table>
+
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Remove member from project team</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Confirm deleting the member</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                        <md-button ng-click="delete()" class="md-primary" style="float: right">
+                                            Delete
+                                        </md-button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </md-card-content>
+            </md-card>
+
+            <br>
+            <md-card flex>
+                <md-toolbar style="background: #f2f2f2; height: 40px">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Edit Deliverables of Ongoing projects</h3>
+                        <span flex="10"></span>
+                    </div>
+                </md-toolbar>
+
+                <md-card-content>
+                    <div ng-controller="MainCtrl as ctrl">
+                        <h4>Add New Deliverable to Ongoing project</h4>
+
+                        <div layout="row">
+
+                            <input flex="63" type="text" class="form-control" placeholder="Deliverable"
+                                   ng-model="delName">
+
+                            <span flex="3"></span>
+                            <md-datepicker ng-model="deadline"
+                                           md-min-date="mindate" md-max-date="maxdate"
+                                           md-placeholder="Deadline">
+                            </md-datepicker>
+                            <span flex="5"></span>
+                            <button class="btn btn-primary" type="button" ng-click="saveDel()"
+                                    ng-disabled="ValAddDel()" style="float: right; height: 32px">
+                                Save
+                            </button>
+                        </div>
+
+                        <!--
+                        <md-input-container style="width: 570px; ">
+                            <input type="text" placeholder="Deliverable" ng-model="delName">
+                        </md-input-container>
+                        <br>
+                        <md-datepicker ng-model="deadline"
+                                       md-min-date="mindate" md-max-date="maxdate" md-placeholder="Deadline">
+                        </md-datepicker>
+
+
+                        <md-button class="md-primary" ng-click="saveDel()" ng-disabled="ValAddDel()">
+                            Save Deliverable
+                        </md-button>
+                        -->
+                        <br>
+                        <h4>Delete or Edit Deliverable</h4>
+                        <table class="c" style="width: 98%" st-table="addedDeliverables">
+                            <thead>
+                            <th> Deliverable</th>
+                            <th> Deadline</th>
+                            <th> Delete</th>
+                            <th> Edit</th>
+                            </thead>
+                            <tbody>
+                            <tbody ng-model="addedDeliverables">
+                            <tr ng-repeat="row in addedDeliverables">
+                                <td> {{row.del_name}}</td>
+                                <td>{{row.deadline}}</td>
+                                <td>
+                                    <md-button class="md-icon-button md-primary" aria-label="Settings" data-toggle="modal"
+                                               ng-click="selectDel(row)" data-target="#deleteDel">
+                                        <md-icon md-svg-icon="view/projectManager/img/delete1.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button md-primary" aria-label="Settings" data-toggle="modal"
+                                               ng-click="selectItem(row)" data-target="#updateDel">
+                                        <md-icon md-svg-icon="view/projectManager/img/edit1.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                            </tbody>
+                        </table>
+
+                        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right"
+                                    style="min-width: 100%">
+                            <md-content layout-padding>
+                                <md-input-container style="width: 570px; ">
+                                    <input type="text" placeholder="Deliverable" ng-model="updatedName">
+                                </md-input-container>
+                                <br>
+                                <md-datepicker ng-model="updatedDeadline"
+                                               md-min-date="mindate" md-max-date="maxdate"
+                                               md-placeholder="Deadline">
+
+                                </md-datepicker>
+                                <md-button ng-click="close()" class="md-primary" style="float: right">
+                                    Close
+                                </md-button>
+                                <md-button ng-click="update()" class="md-primary" style="float: right">
+                                    Update
+                                </md-button>
+                            </md-content>
+                        </md-sidenav>
+
+                        <!--delete deliverable modal-->
+                        <div id="deleteDel" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color:#3b5998;color: #f2f2f2">
+                                        <button type="button" class="close"
+                                                data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Delete deliverable from project</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4><b>Confirm deleting the deliverable</b></h4>
+                                        <p>Do you really want to Delete this Deliverable?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                        <button ng-click="deleteDel()" type="button" class="btn btn-primary" data-dismiss="modal">Delete
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </md-card-content>
+
+            </md-card>
+</div>
+</md-content>
+
+</section>
+</md-card-content>
+</md-card>
+</div>
+
+
+</body>

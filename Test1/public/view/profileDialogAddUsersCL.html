@@ -1,0 +1,42 @@
+<md-dialog>
+
+    <md-card ng-controller="roleSelectCtrl as ctrl">
+
+        <md-card-title>
+            <md-card-title-text layout-align="space-around center">
+                <span class="md-headline">Member Details</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-dialog-content style="width:420px; height: 120px; margin: 10px;">
+
+            <form name="editAddedMembersForm">
+
+                <center>
+                    <table ng-model="gettedMemDetail">
+                        <tr>
+                            <td>Name</td>
+                            <td>{{gettedMemDetail[0].name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact No</td>
+                            <td>{{gettedMemDetail[0].contact_no}}</td>
+                        </tr>
+                    </table>
+                </center>
+                <br>
+
+                <!--ADD button-->
+                <center>
+                    <md-button ng-click="hide()" class="md-primary md-raised" aria-label="Favorite"
+                               ng-disabled="!editAddedMembersForm.$valid">
+                        OK
+                    </md-button>
+                </center>
+
+            </form>
+
+        </md-dialog-content>
+
+    </md-card>
+</md-dialog>

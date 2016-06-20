@@ -1,0 +1,90 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="toolbar.css"/>
+    <link rel="stylesheet" href="table.css"/>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/jQuerry/jquery-1.12.2.min.js"></script>
+
+    <script src="appInitiator.js"></script>
+
+</head>
+<body ng-app="InitiatorApp" ng-controller="safeCtrl">
+
+<!--
+    toolbar code goes from here
+    -->
+
+<md-toolbar style="background: #3b5998;"  >
+
+    <div class="md-toolbar-tools" layout="row">
+
+        <div flex="20">
+            <img src="" align="left" width="254" height="63">
+        </div>
+
+        <div flex="80">
+            <section layout="column" layout-sm="column" layout-align="center end" layout-wrap>
+                <md-button  class="btn1 md-raised">Logout</md-button>
+            </section>
+        </div>
+
+    </div>
+
+</md-toolbar>
+
+<!--
+    sidenav code goes from here
+    -->
+
+<div layout="row">
+    <div flex layout="vertical" layout-fill>
+        <md-sidenav  style="background: #3b5998;" class="md-sidenav-left md-whiteframe-z3" md-is-locked-open="true"
+                    flex="20">
+            <md-content layout="column" style="background: #3b5998;">
+
+                <md-list>
+                    <md-list-item>
+                        <md-button ui-sref="projectInitiate"  class=" btn1 md-raised " flex>
+                            Initiate a New Project
+                        </md-button>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-button ui-sref="viewInitiatedProjects" class="md-raised btn1" flex>View Initiated Projects
+                        </md-button>
+                    </md-list-item>
+
+                </md-list>
+
+            </md-content>
+        </md-sidenav>
+
+        <!--
+            page codes goes from here
+            -->
+
+        <md-content  class="md-padding" style="width: 75%">
+
+
+            <div ui-view></div>
+
+
+        </md-content>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

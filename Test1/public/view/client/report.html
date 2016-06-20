@@ -1,0 +1,200 @@
+<body>
+
+<div ng-init="search" ng-app="MyAppClient" ng-controller="DemoCtrl as ctrl">
+    <md-card style="height: 100%">
+
+
+        <md-toolbar style="background: #3b5998;">
+            <div class="md-toolbar-tools" layout="row">
+                <h2>Client Report</h2>
+            </div>
+        </md-toolbar>
+
+        <md-card-content>
+
+            <h3>Select Project to show Report</h3>
+
+            <div layout="row" flex>
+                <md-autocomplete required
+                                 md-input-name="autocomplete"
+                                 style="width: 95%; height: 40px"
+                                 ng-disabled="ctrl.isDisabled"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="ctrl.selectedItem"
+                                 md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                 md-search-text="ctrl.searchText"
+                                 md-selected-item-change="ctrl.selectedItemChange(item)"
+                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                 md-item-text="item.display"
+                                 md-min-length="0"
+                                 placeholder="Select Category..."
+                                 md-input-id="projectName">
+                    <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText"
+                                          md-highlight-flags="^i">{{item.display}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+
+                <md-button ng-click="getProjectDetails()" class="md-icon-button md-accent" aria-label="Favorite">
+                    <md-icon md-svg-icon="view/client/img/forward.svg"></md-icon>
+                </md-button>
+
+            </div>
+
+            <br><br>
+
+
+            <md-card flex="100">
+
+                <md-toolbar style="background: #f2f2f2;">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Project Details</h3>
+                    </div>
+                </md-toolbar>
+
+                <md-card-content>
+
+                    <!--
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline"> Details </span>
+                        </md-card-title-text>
+                    </md-card-title>
+
+                    <md-divider></md-divider>
+                    <br>
+                    -->
+
+                    <table class="data">
+                        <tr>
+                            <td>Project Name</td>
+                            <td>:</td>
+                            <td>{{name}}</td>
+                        </tr>
+                        <!--
+                        <tr>
+                            <td>Description</td>
+                            <td>:</td>
+                            <td><textarea style="width: 350%; height: 64px; resize: none"></textarea></td>
+                        </tr>
+                        -->
+                        <tr>
+                            <td>Completion Date</td>
+                            <td>:</td>
+                            <td>{{end}}</td>
+                        </tr>
+                        <tr>
+                            <td>Initiated Date</td>
+                            <td>:</td>
+                            <td>{{start}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Duration</td>
+                            <td>:</td>
+                            <td>{{duration}}</td>
+                        </tr>
+                        <tr>
+                            <td>Time Till Completion</td>
+                            <td>:</td>
+                            <td>{{timeTill}}</td>
+                        </tr>
+                        <tr>
+                            <td>Cost</td>
+                            <td>:</td>
+                            <td>{{cost}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>:</td>
+                            <td>{{desc}}</td>
+                        </tr>
+
+                    </table>
+
+
+                </md-card-content>
+            </md-card>
+
+
+            <!-- progress -->
+
+            <md-card style="height: 100%" flex>
+                <md-toolbar style="background: #f2f2f2;">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Project Progress</h3>
+                    </div>
+                </md-toolbar>
+                <!--
+                <md-card-title>
+                    <md-card-title-text layout-align="start space-around">
+                        <span class="md-headline"> Progress </span>
+                    </md-card-title-text>
+                </md-card-title>
+
+
+                <md-divider></md-divider>
+                </br>
+                -->
+                <md-card-content layout-align="space-between" flex>
+
+                    <table class="data">
+                        <tr>
+                            <td>Percentage completed</td>
+                            <td>:</td>
+                            <td>{{pc}}</td>
+                        </tr>
+                    </table>
+                    <section layout="row">
+                        <div flex="50">
+                            <p>Tasks Completed</p>
+                            <ul ng-repeat="c in completeTasks">
+                                <li>{{c}}</li>
+                            </ul>
+                        </div>
+                        <div flex="50">
+                            <p>Tasks Ongoing</p>
+                            <ul ng-repeat="o in ongoingTasks">
+                                <li>{{o}}</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!--
+                    <div ng-controller="taskDetailsDialog"  id="popupContainerTask" ng-cloak>
+                        <div layout="row" layout-wrap layout-margin>
+                            <md-button class="md-raised md-primary" flex="100" flex-gt-md="auto"
+                                       ng-click="taskDetails($event)">
+                                Task Details
+                            </md-button>
+                        </div>
+                    </div>
+                    -->
+                </md-card-content>
+            </md-card>
+
+
+
+                <!--charts-->
+                <md-card>
+                    <md-card-content>
+                        <div>
+                            <fusioncharts
+                                    width="600"
+                                    height="400"
+                                    type="pie3d"
+                                    datasource="{{pieEmp}}"
+                            ></fusioncharts>
+                        </div>
+
+                    </md-card-content>
+                </md-card>
+
+
+
+
+
+        </md-card-content>
+
+    </md-card>
+</div>
+</body>

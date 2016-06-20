@@ -1,0 +1,86 @@
+<!--VIEW TIMESHEET-->
+
+<div >
+
+    <md-card flex ng-controller="ViewTimeSheetandTasks as ctrl">
+        <md-toolbar style="background: #3b5998;">
+            <div class="md-toolbar-tools" layout="row">
+                <h2>View Time Sheet</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <div layout="row">
+                <md-autocomplete style="width: 95%; height: 40px"
+                                 ng-disabled="ctrl.isDisabled"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="ctrl.selectedItem"
+                                 md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                 md-search-text="ctrl.searchText"
+                                 md-selected-item-change="ctrl.selectedItemChange(item)"
+                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                 md-item-text="item.display"
+                                 md-min-length="0"
+                                 md-input-id="projectName"
+                                 placeholder="Select project to view time-sheet">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-button ng-click="timesheet()" class="md-icon-button md-accent" aria-label="Favorite">
+                    <md-icon md-svg-icon="view/client/img/forward.svg"></md-icon>
+                </md-button>
+            </div>
+            <br>
+            <md-card>
+                <md-toolbar style="background: #f2f2f2; height: 40px">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Timesheet</h3>
+                        <span flex="10"></span>
+                        <h3 style="color:#3b5998">Project : {{}}</h3>
+                        <span flex></span>
+                        <h5 style="color:#3b5998">Initial cost : {{}}</h5>
+                        <span flex></span>
+                        <h5 style="color:#3b5998">Current cost : {{}}</h5>
+                    </div>
+                </md-toolbar>
+
+                    <table class="data">
+                        <tr>
+                            <td>Initial cost</td>
+                            <td>:</td>
+                            <td>{{initial_cost}}</td>
+                        </tr>
+                        <tr>
+                            <td>Current cost</td>
+                            <td>:</td>
+                            <td>{{current_cost}}</td>
+                        </tr>
+                    </table>
+
+                    <table class="c" style="width: 98%">
+                        <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th>No. of hours allocated</th>
+                            <th> No. of hours spent</th>
+                            <th> Cost</th>
+                            <th> Task Status</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-model="task_details">
+                        <tr ng-repeat="t in task_details">
+                            <td>{{t.name }}</td>
+                            <td> {{t.time_asigned}}</td>
+                            <td>{{t.time_spent}}</td>
+                            <td>{{t.cost}}</td>
+                            <td>{{t.status}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </md-card-content>
+            </md-card>
+        </md-card-content>
+    </md-card>
+</div>

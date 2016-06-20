@@ -1,0 +1,227 @@
+`<!--VIEW ONGOING PROJECT DETAILS-->
+
+<div ng-controller="Auto as ctrl">
+
+
+    <md-card>
+        <md-toolbar style="background: #3b5998;">
+            <div class="md-toolbar-tools" layout="row">
+                <h2>Project Report</h2>
+            </div>
+        </md-toolbar>
+
+        <md-card-content>
+
+            <div layout="row">
+                <md-autocomplete style="width: 95%; height: 40px"
+                                 ng-disabled="ctrl.isDisabled"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="ctrl.selectedItem"
+                                 md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                 md-search-text="ctrl.searchText"
+                                 md-selected-item-change="ctrl.selectedItemChange(item)"
+                                 md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                 md-item-text="item.display"
+                                 md-min-length="0"
+                                 md-input-id="projectName"
+                                 placeholder="Select a Ongoing Project">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No states matching "{{ctrl.searchText}}" were found.
+                        <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                    </md-not-found>
+                </md-autocomplete>
+                <md-button ng-click="ongoingProjects()" class="md-icon-button md-accent" aria-label="Favorite">
+                    <md-icon md-svg-icon="view/client/img/forward.svg"></md-icon>
+                </md-button>
+            </div>
+
+            <br><br>
+
+            <md-card flex="100" ng-if="chachcha">
+
+                <md-toolbar style="background: #f2f2f2;">
+                    <div class="md-toolbar-tools" layout="row">
+                        <h3 style="color:#0f0f0f">Project Details</h3>
+                        <span flex="10"></span>
+                        <h4 style="color:#3b5998">Name : {{p.pname}}</h4>
+                        <span flex></span>
+                        <h6 style="color:#3b5998">Deadline : {{p.end_date}}</h6>
+                        <span flex></span>
+                        <h6 style="color:#3b5998">Client : {{p.client_mid}}</h6>
+
+                    </div>
+                </md-toolbar>
+
+                <md-card-content>
+
+                    <div>
+                        <center>
+                            <h3>Overall up to date Project Progress</h3>
+                            <fusioncharts
+                                    width="100%"
+                                    height="400"
+                                    type="stackedcolumn2d"
+                                    datasource="{{jsonEncodedData}}"
+                            ></fusioncharts>
+                            <br><br>
+
+                            <h3>up to date Employee wise Project Progress</h3>
+                            <fusioncharts
+                                    width="100%"
+                                    height="400"
+                                    type="stackedcolumn2d"
+                                    datasource="{{EmpData}}"
+                            ></fusioncharts>
+                            <br><br>
+
+                            <div layout="row">
+                                <md-card flex="50">
+                                    <md-toolbar style="background: #f2f2f2;">
+                                        <div class="md-toolbar-tools" layout="row">
+                                            <h3 style="color:#0f0f0f">Description</h3>
+                                            <span flex="10"></span>
+                                        </div>
+                                    </md-toolbar>
+                                    <md-card-content>
+                                        {{p.description}}
+                                    </md-card-content>
+                                </md-card>
+                                <md-card flex="50">
+                                    <md-toolbar style="background: #f2f2f2;">
+                                        <div class="md-toolbar-tools" layout="row">
+                                            <h3 style="color:#0f0f0f">Deliverables</h3>
+                                            <span flex="10"></span>
+                                        </div>
+                                    </md-toolbar>
+                                    <md-card-content ng-model="dels">
+                                        <table class="c" style="width: 90%" st-table="displayedCollection"
+                                               st-safe-src="dels">
+                                            <thead>
+                                            <tr>
+                                                <th st-sort="del_name"> Deliverable</th>
+                                                <th st-sort="deadline"> Deadline</th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <input st-search="del_name" placeholder="search for Deliverable"
+                                                           class="input-sm form-control" type="search"/>
+                                                </th>
+                                                <th>
+                                                    <input st-search="deadline" placeholder="search for Deadline"
+                                                           class="input-sm form-control" type="search"/>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="d in displayedCollection">
+                                                <td>{{d.del_name}}</td>
+                                                <td> {{d.deadline}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+
+                            <md-card>
+                                <md-toolbar style="background: #f2f2f2;">
+                                    <div class="md-toolbar-tools" layout="row">
+                                        <h3 style="color:#0f0f0f">Tasks</h3>
+                                        <span flex="10"></span>
+                                    </div>
+                                </md-toolbar>
+                                <md-card-content>
+                                    <table class="c" style="width: 95%" st-table="displayed3"
+                                           st-safe-src="tasks">
+                                        <thead>
+                                        <tr>
+                                            <th st-sort="name">Name</th>
+                                            <th>Hours</th>
+                                            <th>Deadline</th>
+                                            <th st-sort="status">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">
+                                                <input st-search="name" placeholder="search for Task name"
+                                                       class="input-sm form-control" type="search"/>
+                                            </th>
+                                            <th colspan="2">
+                                                <input st-search="status" placeholder="search for Status"
+                                                       class="input-sm form-control" type="search"/>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="row in displayed3">
+                                            <td>{{row.name}}</td>
+                                            <td>{{row.time}}</td>
+                                            <td>{{row.deadline}}</td>
+                                            <td>{{row.status}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </md-card-content>
+                            </md-card>
+
+                            <md-card>
+                                <md-toolbar style="background: #f2f2f2;">
+                                    <div class="md-toolbar-tools" layout="row">
+                                        <h3 style="color:#0f0f0f">Sub Tasks</h3>
+                                        <span flex="10"></span>
+                                    </div>
+                                </md-toolbar>
+                                <md-card-content>
+                                    <table class="c" style="width: 95%" st-table="displayedCol2"
+                                           st-safe-src="subtasks">
+                                        <thead>
+                                        <tr>
+                                            <th st-sort="name">Name</th>
+                                            <th st-sort="task_id">Task</th>
+                                            <th st-sort="member">Member</th>
+                                            <th st-sort="time">Hours</th>
+                                            <th st-sort="deadline">Deadline</th>
+                                            <th st-sort="status">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">
+                                                <input st-search="name" placeholder="search for Sub task name"
+                                                       class="input-sm form-control" type="search"/>
+                                            </th>
+                                            <th colspan="2">
+                                                <input st-search="member" placeholder="search for Member"
+                                                       class="input-sm form-control" type="search"/>
+                                            </th>
+                                            <th colspan="2">
+                                                <input st-search="status" placeholder="search for Status"
+                                                       class="input-sm form-control" type="search"/>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="row in displayedCol2">
+                                            <td>{{row.name}}</td>
+                                            <td>{{row.task_id}}</td>
+                                            <td>{{row.member}}</td>
+                                            <td>{{row.time}}</td>
+                                            <td>{{row.deadline}}</td>
+                                            <td>{{row.status}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </md-card-content>
+                            </md-card>
+
+                        </center>
+                    </div>
+
+
+                </md-card-content>
+            </md-card>
+
+        </md-card-content>
+    </md-card>
+</div>
+</div>

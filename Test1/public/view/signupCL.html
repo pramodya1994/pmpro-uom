@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="toolbarCL.css"/>
+    <link rel="stylesheet" href="table.css"/>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+    <script src="bower_components/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+    <script src="appCL.js"></script>
+
+</head>
+<body ng-app="MyApp">
+<center>
+
+    <div>
+        <p style="font-size: 60px; color: #000000;">PM Pro</p>
+    </div>
+
+    <form ng-controller="signupCtrl" ng-model="company" name="SignupForm">
+    <md-card style="width: 500px; height: 600px; vert-align: middle; horiz-align: center;">
+        <md-card-content>
+
+
+            <h2 align="center">Sign Up</h2>
+            <table>
+
+                <tr>
+                    <td>
+                        <label>Company name</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <md-input-container>
+                            <input style="background-color: #e6e6ff; width: 300px;" ng-model="company.name"
+                            aria-label="company.name" required name="companyName">
+                            <div ng-messages="SignupForm.companyName.$error">
+                                <div ng-message="required">Company Name is required.</div>
+                            </div>
+                        </md-input-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>E-mail address</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <md-input-container>
+                            <input style="background-color: #e6e6ff; width: 300px;" ng-model="company.email" aria-label="company.email" required
+                                   name="companyEmail" type="email">
+                            <div ng-messages="SignupForm.companyEmail.$error">
+                                <div ng-message="required">Email is required.</div>
+                                <div ng-message="email">Email is invalid</div>
+                            </div>
+                        </md-input-container>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Password</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <md-input-container>
+                            <input style="background-color: #e6e6ff; width: 300px;" data-ng-model="company.password" aria-label="company.password" required
+                            name="companyPassword" type="password">
+                            <div ng-messages="SignupForm.companyPassword.$error">
+                                <div ng-message="required">Password is required.</div>
+                            </div>
+                        </md-input-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Confirm password</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <md-input-container>
+                            <input style="background-color: #e6e6ff; width: 300px;" ng-model="company.confirmPassword" aria-label="company.confirmPassword"
+                            required name="confirmPassword" type="password" data-password-verify="company.password">
+
+                            <div ng-messages="SignupForm.confirmPassword.$error">
+                                <div ng-message="required">Confirm password is required.</div>
+                                <div ng-message="passwordVerify">Fields are not equal.</div>
+                            </div>
+                        </md-input-container>
+
+                    </td>
+                </tr>
+
+            </table>
+
+            <md-button  class="md-raised md-primary" style="float: right"
+                       ng-click="signupCompany()" ng-disabled="!SignupForm.$valid">Sign Up</md-button>
+
+        </md-card-content>
+
+
+    </md-card>
+    <div float="right">
+        <p>Allready have an account?</p>
+        <md-button class="md-raised md-primary" style="float:inherit" ng-href="loginCL.html">Log In</md-button>
+
+    </div>
+</form>
+
+
+</center>
+
+
+</body>
+</html>

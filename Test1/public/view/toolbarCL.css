@@ -1,0 +1,69 @@
+.toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
+    color: white;
+    height: 100%;
+}
+
+.ng-scope {
+    height: 100%;
+}
+
+.btn1 {
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    min-width: 88px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: none;
+    text-decoration:none;
+    border: none;
+    outline: none;
+}
+
+
+/*dialogue boxes css goes from here.*/
+.inputdemoBasicUsage .md-datepicker-button {
+    width: 36px; }
+
+
+/*dialog box*/
+
+.dialogdemoBasicUsage #popupContainer {
+    position: static; }
+.dialogdemoBasicUsage .footer {
+    width: 100%;
+    text-align: center;
+    margin-left: 20px; }
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+    font-size: 0.8em;
+    margin-top: 50px; }
+
+/*custom auto complete css goes from here.*/
+
+body {
+    background-image: url("");
+    background-size: cover;
+}
+
+.selectdemoBasicUsage md-input-container {
+    margin-right: 10px; }
+
+/*roles priviledges check box css*/
+.checkboxdemoSyncing .checkboxDemo1 div {
+    clear: both; }
+.checkboxdemoSyncing legend {
+    color: #3F51B5; }
+.checkboxdemoSyncing legend code {
+    color: #3F51B5;
+    font-weight: normal; }
+.checkboxdemoSyncing p {
+    padding-left: 8px; }
+.checkboxdemoSyncing .info {
+    padding-left: 13px; }
+.checkboxdemoSyncing div.standard {
+    padding: 8px;
+    padding-left: 15px; }
+.checkboxdemoSyncing fieldset.standard {
+    border-style: solid;
+    border-width: 1px;
+    height: 100%; }

@@ -1,0 +1,81 @@
+<body ng-app="InitiatorApp">
+
+<div style="width: 100%">
+    <md-card style="width: 100%">
+        <md-toolbar style="background: #3b5998;"  >
+            <div class="md-toolbar-tools" layout="row">
+                <h2>View Initiated Projects</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <br>
+
+        <md-card-content>
+
+            <div ng-controller="viewInCtrl">
+
+
+                <table st-table="displayedCollection" st-safe-src="initiatedProjects"  class="c" width="95%">
+                    <!--
+                    <md-input-container class="md-block">
+                        <md-icon md-svg-src="view/initiate/img/search1.svg"></md-icon>
+                        <input  class="form-control" type="text"
+                               placeholder="Global search ..." style="width: 95%">
+                    </md-input-container>
+                    <br>
+                    -->
+                    <thead>
+                    <tr>
+                        <th st-sort="pname">Project Name</th>
+                        <th st-sort="client_mid">Client</th>
+                        <th st-sort="project_manager_mid">Project Manager</th>
+                        <th st-sort="initiator_mid">Initiator</th>
+                        <th st-sort="end_date">Deadline</th>
+                        <th st-sort="start_date">Initiated Date</th>
+                        <th st-sort="status">Status</th>
+                        <th>Edit / Delete</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">
+                            <input st-search="pname" placeholder="search for Project name" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th colspan="3">
+                            <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th colspan="2">
+                            <input st-search="status" placeholder="search for Status" class="input-sm form-control" type="search"/>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ip in displayedCollection">
+                        <td>{{ip.pname}}</td>
+                        <td>{{ip.client_mid}}</td>
+                        <td>{{ip.project_manager_mid}}</td>
+                        <td>{{ip.initiator_mid}}</td>
+                        <td>{{ip.end_date}}</td>
+                        <td>{{ip.start_date}}</td>
+                        <td>{{ip.status}}</td>
+                        <td>
+                            <md-button class="md-icon-button md-mini" ui-sref="editInitiatedProjects" aria-label="Settings"
+                                       flex-gt-md="auto" ng-click="editIP(ip)">
+                                <md-icon md-svg-icon="view/initiate/img/edit1.svg"></md-icon>
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </md-card-content>
+    </md-card>
+
+
+</div>
+</body>
+
+
+
+

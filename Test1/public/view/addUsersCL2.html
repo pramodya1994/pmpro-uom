@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Members</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="toolbarCL.css"/>
+    <link rel="stylesheet" href="table.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap-3.3.6-dist/css/bootstrap.css"/>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+    <script src="bower_components/jQuerry/jquery-1.12.2.min.js"></script>
+    <script src="bower_components/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <script src="bower_components/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+
+    <script src="appCL.js"></script>
+
+</head>
+<body ng-app="MyApp">
+
+<md-toolbar style="background: #f5f5f5;">
+    <div class="md-toolbar-tools">
+
+        <h2>
+            <span></span>
+        </h2>
+        <span flex></span>
+        <md-button ng-href="" class="md-raised btn1" style="color: #f2f2f2; background:#3b5998; ">Add members
+        </md-button>
+        <md-button ng-href="recomendedRolesCL.html" class="md-raised btn1" style="color: #3b5998; background:#f2f2f2; ">Add
+            Own Roles
+        </md-button>
+        <md-button ng-href="loginCL.html" class="md-fab md-mini" aria-label="logout" style="background-color:#f2f2f2 ">
+            <md-icon md-svg-src="img/power.svg"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+
+<div ng-controller="roleSelectCtrl as ctrl">
+
+
+    <md-toolbar style="background-color: #3b5998">
+        <div class="md-toolbar-tools">
+            <h2 align="center">Add your Team</h2>
+        </div>
+    </md-toolbar>
+
+    <form name="addMembersForm" ng-model="member">
+
+        <br>
+
+        <table style="padding: 0 20px 0 20px">
+            <tr>
+                <td style="padding: 0 20px 0 20px" width="50%">
+                    <md-input-container>
+                        <input required name="email" style="width: 300%"
+                               type="email" placeholder="Enter Member E-mail" ng-model="email"
+                               aria-label="member.email">
+
+                        <div ng-messages="addMembersForm.email.$error">
+                            <div ng-message="required">Email is required.</div>
+                            <div ng-message="email">Email is invalid.</div>
+                        </div>
+                    </md-input-container>
+                </td>
+                <td style="padding: 0 20px 0 20px" width="40%">
+
+
+                    <!--
+                    <md-input-container>
+                        <md-select ng-model="member.category" placeholder="Select Designation" required
+                                   style="width: 400px;">
+                            <md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
+                                {{state.abbrev}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    -->
+                    <md-autocomplete required
+                                     md-input-name="autocomplete"
+                                     style="width: 400px; height: 40px"
+                                     ng-disabled="ctrl.isDisabled"
+                                     md-no-cache="ctrl.noCache"
+                                     md-selected-item="ctrl.selectedItem"
+                                     md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                                     md-search-text="ctrl.searchText"
+                                     md-selected-item-change="ctrl.selectedItemChange(item)"
+                                     md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                     md-item-text="item.display"
+                                     md-min-length="0"
+                                     placeholder="Select Category..."
+                                     md-input-id="categoryName">
+                        <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText"
+                                          md-highlight-flags="^i">{{item.display}}</span>
+                        </md-item-template>
+                        <div ng-messages="addMembersForm.autocomplete.$error">
+                            <div ng-message="required">Category is required.</div>
+                        </div>
+                        <!--
+                        <md-not-found>
+                            No states matching "{{ctrl.searchText}}" were found.
+                            <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                        </md-not-found>
+                        -->
+                    </md-autocomplete>
+
+                </td>
+                <td style="padding: 0 20px 0 20px" width="10%">
+
+                    <md-button class="md-raised md-primary btn1" style="float: right"
+                               ng-disabled="!addMembersForm.$valid" ng-click="addMember()">
+                        Add member
+                    </md-button>
+                </td>
+            </tr>
+        </table>
+        <!--should send a email to member.-->
+    </form>
+
+    <br>
+
+
+    <!--TABLE-->
+
+    <div>
+
+        <md-toolbar style="background-color: #3b5998">
+            <div class="md-toolbar-tools">
+                <h2 align="center">Added Members</h2>
+            </div>
+        </md-toolbar>
+
+
+        <div class="container">
+            <!--
+            <h2>Modal Example</h2>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+            -->
+
+            <!-- Edit user Modal -->
+            <div class="modal fade" id="editUserModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #3b5998">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" style="color: #f2f2f2">Do you want to 'Edit' added member?</h4>
+                        </div>
+                        <div class="modal-body container-fluid typeahead-demo">
+                            <form name="form1">
+                                <h5>New Category</h5>
+                                <input type="text" ng-model="selected" placeholder="Select new Category of Member..."
+                                       uib-typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                       class="form-control" required>
+                                <h5>New Email</h5>
+                                <input type="email" ng-model="newEmail" placeholder="Enter new Email of Member..."
+                                       class="form-control" required>
+                                <br>
+                                <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                                        ng-disabled="!form1.$valid"
+                                        ng-click="editMember()">
+                                    Submit
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--show profile modal-->
+            <div class="modal fade" id="showProfileModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #3b5998">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" style="color: #f2f2f2">Member Profile</h4>
+                        </div>
+                        <div class="modal-body container-fluid">
+                            <center>
+                                <table class="lead">
+                                    <tr>
+                                        <td style="padding: 10px">Member Name</td>
+                                        <td style="padding: 10px">:</td>
+                                        <td style="padding: 10px">{{gettedMemDetail[0].name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px">Contact No</td>
+                                        <td style="padding: 10px">:</td>
+                                        <td style="padding: 10px">{{gettedMemDetail[0].contact_no}}</td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <center>
+            <br>
+            <table st-table="displayedMembers" st-safe-src="addedMembers" class="c" style="width: 95%;">
+                <thead>
+                <tr>
+                    <th st-sort="projectName">Email address</th>
+                    <th st-sort="client">Category</th>
+                    <th st-sort="projectManager">Added date</th>
+                    <th st-sort="deadline">Member status</th>
+                </tr>
+                <tr>
+                    <th colspan="1">
+                        <input st-search="email" placeholder="search for Email" class="input-sm form-control"
+                               type="search"/>
+                    </th>
+                    <th colspan="2">
+                        <input st-search="category" placeholder="search for Category" class="input-sm form-control"
+                               type="search"/>
+                    </th>
+                    <th colspan="1">
+                        <input st-search="memberStatus" placeholder="search for Member Status"
+                               class="input-sm form-control" type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="mem in displayedMembers">
+                    <td>{{mem.email}}</td>
+                    <td>{{mem.category}}</td>
+                    <td>{{mem.addedDate}}</td>
+                    <td>{{mem.memberStatus}}</td>
+                    <td>
+                        <md-button class="md-icon-button md-primary" aria-label="Settings" ng-click="showProfile(mem)"
+                                   data-toggle="modal" data-target="#showProfileModal">
+                            <md-icon md-svg-icon="img/acBox.svg"></md-icon>
+                        </md-button>
+                    </td>
+                    <td>
+                        <md-button class="md-icon-button md-primary" aria-label="Settings" ng-click="selectItem(mem)"
+                                   data-toggle="modal" data-target="#deleteUserModal">
+                            <md-icon md-svg-icon="img/delete1.svg"></md-icon>
+                        </md-button>
+                    </td>
+
+                    <td>
+                        <md-button class="md-icon-button md-primary" aria-label="Settings" ng-click="selectItem(mem)"
+                                   data-toggle="modal" data-target="#editUserModal">
+                            <md-icon md-svg-icon="img/edit1.svg"></md-icon>
+                        </md-button>
+                    </td>
+
+                    <!--delete user modal-->
+                    <div class="modal fade" id="deleteUserModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #3b5998">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" style="color: #f2f2f2">Delete Member</h4>
+                                </div>
+                                <div class="modal-body container-fluid">
+                                    <h2>Would you like to Delete this member?</h2>
+
+                                    <p>if you click 'Delete' this member will permanently delete.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            ng-click="removeItem()">Delete
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </center>
+    </div>
+
+</div>
+
+
+</body>
+</html>

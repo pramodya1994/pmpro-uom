@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="toolbarCL.css"/>
+    <link rel="stylesheet" href="table.css"/>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+
+    <!--fusion charts js goes from here-->
+    <script src="bower_components/fusioncharts/js/themes/fusioncharts.js"></script>
+    <script src="bower_components/fusioncharts/js/themes/fusioncharts.charts.js"></script>
+    <script src="bower_components/fusioncharts/js/themes/fusioncharts.widgets.js"></script>
+    <script src="bower_components/fusioncharts/js/themes/fusioncharts.powercharts.js"></script>
+    <script src="bower_components/fusioncharts/js/themes/fusioncharts.gantt.js"></script>
+    <script src="bower_components/fusioncharts/js/themes/fusioncharts.maps.js"></script>
+    <script src="bower_components/fusioncharts/js/maps/*"></script>
+    <script src="bower_components/fusioncharts/js/themes/*"></script>
+
+    <script src="appCL.js"></script>
+
+</head>
+<body ng-app="MyApp">
+
+<md-toolbar style="background: #f5f5f5;">
+    <div class="md-toolbar-tools">
+
+        <h2>
+            <span></span>
+        </h2>
+        <span flex></span>
+        <md-button ng-href="addUsersCL.html" class="md-raised btn1" style="color: #8a55f5; background:#ffffff; ">Add
+            members
+        </md-button>
+        <md-button ng-href="" class="md-raised btn1" style="color: #ffffff; background:#8a55f5; ">Add Roles
+        </md-button>
+        <md-button ng-href="indexCL.html" class="md-fab md-mini" aria-label="Use Android"
+                   style="background-color:#ffffff ">
+            <md-icon md-svg-src="img/power.svg"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<div layout="row">
+
+    <md-card style="width: 500px; height: 600px; vert-align: middle; horiz-align: center;" flex="30">
+        <md-card-content>
+
+
+            <h2 align="center">Add Roles for your Team</h2>
+
+            <form name="RolesForm">
+
+                <div ng-controller="SelectCtrl as ctrl">
+                    <md-input-container>
+                        <label>Category Name</label>
+                        <md-select ng-model="ctrl.userState" style="width: 365px;">
+                            <md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
+                                {{state.abbrev}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <md-input-container class="md-block" ng-controller="InputMessageRolesCtrl">
+                    <label>Salary Rate per Hour</label>
+                    <input required name="salaryRate" ng-model="roles.salaryRate">
+
+                    <div ng-messages="RolesForm.salaryRate.$error">
+                        <div ng-message="required">Salary Rate is required.</div>
+                    </div>
+                </md-input-container>
+
+                <md-button class="md-raised md-primary btn1" style="float: right">Add Role</md-button>
+                <!--should send a email to member.-->
+
+            </form>
+
+        </md-card-content>
+
+
+    </md-card>
+
+    <md-card flex=70">
+        <md-card-content>
+            <h2 align="center">Your team Roles</h2>
+
+            <div ng-controller="safeCtrl">
+
+
+                <table st-table="displayedCollection" st-safe-src="rowCollection" class="c" style="width: 90%;">
+                    <thead>
+
+
+                    <tr>
+                        <th st-sort="projectName">Designation</th>
+                        <th st-sort="client">Salary rate</th>
+                        <th st-sort="projectManager">Added date</th>
+                        <th st-sort="deadline">No of members</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="initiateProject in initiateProjects">
+                        <td>{{initiateProject.projectName}}</td>
+                        <td>{{initiateProject.client}}</td>
+                        <td>{{initiateProject.projectManager}}</td>
+                        <td>{{initiateProject.deadline}}</td>
+
+                        <td>
+
+
+                            <md-button class="md-icon-button md-primary btn btn-sm btn-danger"
+                                       aria-label="Settings"
+                                       ng-click="showConfirm($event)" flex="100" flex-gt-md="auto">
+                                <md-icon md-svg-icon="img/delete1.svg"></md-icon>
+                            </md-button>
+
+
+                        </td>
+                        <td>
+                            <md-button ui-sref="editProjectInitiate-Initiator" class="md-icon-button md-primary"
+                                       aria-label="Settings">
+                                <md-icon md-svg-icon="img/edit1.svg"></md-icon>
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <md-button class="md-raised md-primary btn1" style="float: right">Cancel</md-button>
+                <md-button class="md-raised md-primary btn1" style="float: right">Save</md-button>
+
+            </div>
+        </md-card-content>
+    </md-card>
+
+
+</div>
+
+
+</body>
+</html>
